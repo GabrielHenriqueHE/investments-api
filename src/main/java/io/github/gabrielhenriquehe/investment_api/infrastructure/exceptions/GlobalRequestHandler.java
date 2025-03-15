@@ -20,4 +20,15 @@ public class GlobalRequestHandler {
 
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(response);
     }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<AppResponseDTO<Void>> handleResourceNotFoundException(Exception e) {
+        AppResponseDTO<Void> response = new AppResponseDTO<>(
+                e.getMessage(),
+                HttpStatus.NOT_FOUND.value(),
+                null
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
 }
