@@ -48,4 +48,22 @@ public class InvestmentController {
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AppResponseDTO<InvestmentResponseDTO>> updateInvestment(
+        @RequestBody InvestmentRequestDTO dto,
+        @PathVariable("id") Long id
+    ) {
+        var investment = this.investmentService.updateInvestment(dto, id);
+
+        System.out.println();
+
+        AppResponseDTO<InvestmentResponseDTO> response = new AppResponseDTO<>(
+                "Investment data updated successfully",
+                HttpStatus.OK.value(),
+                InvestmentMapper.investmentToInvestmentResponseDTO(investment)
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }
