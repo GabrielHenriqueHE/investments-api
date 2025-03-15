@@ -4,13 +4,13 @@ import lombok.Getter;
 
 @Getter
 public enum InvestmentTypeEnum {
-    FUNDS(0),
-    STOCKS(1),
-    SECURITIES(2);
+    FUNDS("FUNDS"),
+    STOCKS("STOCKS"),
+    SECURITIES("SECURITIES");
 
-    private final Integer value;
+    private final String value;
 
-    InvestmentTypeEnum(Integer value){
+    InvestmentTypeEnum(String value){
         this.value = value;
     }
 }
