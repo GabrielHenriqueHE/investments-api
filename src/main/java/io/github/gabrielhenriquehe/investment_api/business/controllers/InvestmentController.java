@@ -8,10 +8,9 @@ import io.github.gabrielhenriquehe.investment_api.infrastructure.mappers.Investm
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/investments")
@@ -31,5 +30,22 @@ public class InvestmentController {
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping()
+    public ResponseEntity<AppResponseDTO<List<InvestmentResponseDTO>>> getAllInvestments() {
+        var rawInvestments = this.investmentService.findAllInvestments();
+
+        List<InvestmentResponseDTO> investments = rawInvestments.stream()
+                .map(InvestmentMapper::investmentToInvestmentResponseDTO)
+                .toList();
+
+        AppResponseDTO<List<InvestmentResponseDTO>> response = new AppResponseDTO<>(
+                null,
+                HttpStatus.OK.value(),
+                investments
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
