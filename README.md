@@ -152,3 +152,7 @@ Respostas possíveis:
     - Não foi encontrado nenhum registro para o ID correspondente.
 - `400 Bad Request`
     - A API não compreendeu a requisição do cliente.
+
+`GET /docs/swagger-ui`
+
+Este endpoint está configurado para exibir a interface gráfica do Swagger OpenAPI com a documentação da aplicação.
