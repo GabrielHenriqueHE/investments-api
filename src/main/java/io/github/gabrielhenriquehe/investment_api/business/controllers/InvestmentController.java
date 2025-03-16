@@ -66,4 +66,19 @@ public class InvestmentController {
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<AppResponseDTO<Void>> deleteInvestment(
+            @PathVariable("id") Long id
+    ) {
+        this.investmentService.deleteInvestment(id);
+
+        AppResponseDTO<Void> response = new AppResponseDTO<>(
+                "Investment deleted successfully",
+                HttpStatus.OK.value(),
+                null
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

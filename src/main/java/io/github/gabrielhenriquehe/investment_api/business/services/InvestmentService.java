@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -51,7 +50,7 @@ public class InvestmentService {
 
     @Transactional
     public Investment updateInvestment(InvestmentRequestDTO dto, Long id) {
-        log.info("Initializing task update transaction.");
+        log.info("Initializing investment update transaction.");
         log.info("Searching for investment with ID: ".concat(String.valueOf(id)));
         Investment investment = this.investmentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No investment found from ID: ".concat(String.valueOf(id))));
@@ -84,9 +83,19 @@ public class InvestmentService {
             investment.setDatetime(dto.datetime());
         }
 
-        log.info("Finishing task update transaction.");
+        log.info("Finishing investment update transaction.");
 
         return this.investmentRepository.save(investment);
+    }
+
+    @Transactional
+    public void deleteInvestment(Long id) {
+        log.info("Initializing investment deletion transaction.");
+        Investment investment = this.investmentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No investment found from ID: ".concat(String.valueOf(id))));
+
+        log.info("Finishing investment deletion transaction.");
+        this.investmentRepository.delete(investment);
     }
 
     private void validateInvestmentCreation(InvestmentRequestDTO dto) {
